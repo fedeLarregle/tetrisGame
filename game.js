@@ -37,6 +37,12 @@ function drawMatrix(matrix, offSet) {
 	});
 }
 
+// We increment the 'y' property of our figure in order to make it move down 
+function figureDrop() {
+	figure.pos.y++;
+	dropCounter = 0;
+}
+
 let dropCounter = 0;
 let dropInterval = 1000;
 let lastTime = 0;
@@ -45,7 +51,10 @@ function update(time = 0) {
 	const deltaTime = time - lastTime;
 	lastTime = time;
 	dropCounter += deltaTime;
-
+	// Check condition for dropping the figure only ones per second
+	if ( dropCounter > dropInterval ) {
+		figureDrop();
+	}
 	draw();
 	requestAnimationFrame(update);
 }

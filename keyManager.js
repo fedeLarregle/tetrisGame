@@ -7,9 +7,9 @@ document.addEventListener('keydown', event => {
 		figureDrop();
 	}
 	if ( event.keyCode === KEY_LEFT ) {
-		figure.pos.x--;
+		figureLeft();
 	}
 	if ( event.keyCode === KEY_RIGHT ) {
-		figure.pos.x++;
+		figureRight();
 	}
 });

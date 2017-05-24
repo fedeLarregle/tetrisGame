@@ -16,7 +16,7 @@ const figure_o = [
 
 const figure_j = [
 	[0, 0, 0],
-	[1, 0, 0].
+	[1, 0, 0],
 	[1, 1, 1]
 ];
 
@@ -30,3 +30,16 @@ const figure = {
 	pos: {x: 8, y: 8},
 	matrix: figure_t
 };
+
+// We increment the 'y' property of our figure in order to make it move down 
+function figureDrop() {
+	figure.pos.y++;
+}
+
+function figureLeft() {
+	figure.pos.x--;
+}
+
+function figureRight() {
+	figure.pos.x++;
+}

@@ -3,19 +3,6 @@ const context = canvas.getContext('2d');
 
 context.scale(20, 20);
 
-// First figure of our tetris game
-const figure_matrix = [
-	[0, 0, 0],
-	[0, 1, 0],
-	[1, 1, 1]
-];
-
-// Object representation of our blocked figure
-const figure = {
-	pos: {x: 8, y: 8},
-	matrix: figure_matrix,
-}
-
 // This method will 'clear' the screen by re-filling it with black color
 // and drawing the figure_matrix on it's position all over again
 function draw() {
@@ -37,16 +24,11 @@ function drawMatrix(matrix, offSet) {
 	});
 }
 
-// We increment the 'y' property of our figure in order to make it move down 
-function figureDrop() {
-	figure.pos.y++;
-	dropCounter = 0;
-}
-
 function update() {
 	figureDrop();
 }
 
+// The most similar way to do a 'System.currentTimeMillis()' 
 function timestamp() {
   return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 }
@@ -69,5 +51,5 @@ function frame() {
 	requestAnimationFrame(frame);
 }
 
-// The call the update method (could be seen as our not-that-fancy game loop)
+// The call the requestAnimationFrame method (could be seen as our not-that-fancy game loop)
 requestAnimationFrame(frame);

@@ -43,20 +43,31 @@ function figureDrop() {
 	dropCounter = 0;
 }
 
-let dropCounter = 0;
-let dropInterval = 1000;
-let lastTime = 0;
-// We limit the 'frames' per second to update one time per second
-function update(time = 0) {
-	const deltaTime = time - lastTime;
-	lastTime = time;
-	dropCounter += deltaTime;
-	// Check condition for dropping the figure only ones per second
-	if ( dropCounter > dropInterval ) {
-		figureDrop();
-	}
-	draw();
-	requestAnimationFrame(update);
+function update() {
+	figureDrop();
 }
+
+function timestamp() {
+  return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+}
+
+let now;
+let	dt = 0;
+let	last = timestamp();
+let step = 1
+// We limit the 'frames' per second to update one time per second
+function frame() {
+	now = timestamp();
+	dt = dt + Math.min(1, (now - last) / 1000);
+	while ( dt > step ) {
+		dt = dt - step;
+		update(step);
+	}
+	draw(dt);
+	last = now;
+	
+	requestAnimationFrame(frame);
+}
+
 // The call the update method (could be seen as our not-that-fancy game loop)
-update();
+requestAnimationFrame(frame);

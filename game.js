@@ -65,6 +65,7 @@ function merge(map, figure) {
 function update() {
 	if ( collide(map, figure, 0, 1) ) {
 		merge(map, figure);
+		figure.matrix = figures[chooseFigure()];
 		figure.pos.y = 0;
 	} else {
 		figureDrop();

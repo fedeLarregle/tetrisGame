@@ -13,9 +13,13 @@ document.addEventListener('keydown', event => {
 		}
 	}
 	if ( event.keyCode === KEY_LEFT ) {
-		figureLeft();
+		if ( !wallCollide(map, figure, -1, 0) ) {
+			figureLeft();
+		}
 	}
 	if ( event.keyCode === KEY_RIGHT ) {
-		figureRight();
+		if ( !wallCollide(map, figure, 1, 0) ) {
+			figureRight();
+		}
 	}
 });

@@ -1,5 +1,7 @@
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
+const MAP_WIDTH = 12;
+const MAP_HEIGHT = 20;
 
 context.scale(20, 20);
 
@@ -11,7 +13,7 @@ function createMap(width, height) {
 	return map;
 }
 
-const map = createMap(12, 20);
+const map = createMap(MAP_WIDTH, MAP_HEIGHT);
 
 // This method will 'clear' the screen by re-filling it with black color
 // and drawing the figure_matrix on it's position all over again
@@ -33,6 +35,20 @@ function drawMatrix(matrix, offSet) {
 			}
 		});
 	});
+}
+
+function wallCollide(map, figure, x, y) {
+	const toX = figure.pos.x + x;
+	const toY = figure.pos.y + y;
+	const m = figure.matrix;
+	const o = figure.pos;
+	let colliding = false;
+	if ( (toX + m[0].length) > MAP_WIDTH ) {
+		colliding = true;
+	} else if ( toX < 0 ) {
+		colliding = true;
+	}
+	return colliding;
 }
 
 // Checks if we collide with a '1' in our map 'matrix'

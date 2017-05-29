@@ -44,6 +44,7 @@ function wallCollide(map, figure, x, y) {
 	const o = figure.pos;
 	let colliding = false;
 	if ( (toX + m[0].length) > MAP_WIDTH ) {
+
 		colliding = true;
 	} else if ( toX < 0 ) {
 		colliding = true;

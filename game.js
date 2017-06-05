@@ -32,6 +32,10 @@ function drawMatrix(matrix, offSet) {
 			if( value !== 0 ) {
 				context.fillStyle = 'red';
 				context.fillRect(x + offSet.x, y + offSet.y, 1, 1);
+
+//				context.strokeStyle = 'rgb(255, 255, 255)';
+//				context.rect(x + offSet.x, y + offSet.y, 20, 20);
+//				context.stroke();
 			}
 		});
 	});
@@ -44,7 +48,6 @@ function wallCollide(map, figure, x, y) {
 	const o = figure.pos;
 	let colliding = false;
 	if ( (toX + m[0].length) > MAP_WIDTH ) {
-
 		colliding = true;
 	} else if ( toX < 0 ) {
 		colliding = true;
@@ -77,6 +80,23 @@ function merge(map, figure) {
 			}
 		});
 	});
+}
+
+function rotate(figure) {
+	for (let y = 0; y < figure.matrix.length; ++y) {
+        for (let x = 0; x < y; ++x) {
+            [
+                figure.matrix[x][y],
+                figure.matrix[y][x],
+            ] = [
+                figure.matrix[y][x],
+                figure.matrix[x][y],
+            ];
+        }
+    }
+
+	figure.matrix.forEach(row => row.reverse());
+
 }
 
 function update() {

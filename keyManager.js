@@ -1,8 +1,14 @@
 const KEY_DOWN = 40;
 const KEY_RIGHT = 39;
+const KEY_UP = 38;
 const KEY_LEFT = 37;
 
 document.addEventListener('keydown', event => {
+	if ( event.keyCode === KEY_UP ) {
+		if ( (!collide(map, figure, -1, 0)) && (!collide(map, figure, 1, 0)) ) {
+			rotate(figure);
+		}
+	}
 	if ( event.keyCode === KEY_DOWN ) {
 		if ( collide(map, figure, 0, 1) ) {
 			merge(map, figure);
@@ -13,17 +19,13 @@ document.addEventListener('keydown', event => {
 		}
 	}
 	if ( event.keyCode === KEY_LEFT ) {
-		if ( !wallCollide(map, figure, -1, 0) ) {
-			if ( !collide(map, figure, -1, 0)) {
-				figureLeft();
-			}
+		if ( !collide(map, figure, -1, 0)) {
+			figureLeft();
 		}
 	}
 	if ( event.keyCode === KEY_RIGHT ) {
-		if ( !wallCollide(map, figure, 1, 0) ) {
-			if ( !collide(map, figure, 1, 0) ) {	
-				figureRight();
-			}
+		if ( !collide(map, figure, 1, 0) ) {	
+			figureRight();
 		}
 	}
 });

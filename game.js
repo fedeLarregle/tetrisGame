@@ -72,11 +72,12 @@ function collide(map, figure, x, y) {
 }
 
 // Merges the map with the figures in it
+// We are using the number '2' to differenciate between blocks already merged and the ones that are part of the moving figure
 function merge(map, figure) {
 	figure.matrix.forEach( (row, y) => {
 		row.forEach((value, x) => {
 			if ( value !== 0 ) {
-				map[y + figure.pos.y][x + figure.pos.x] = value;
+				map[y + figure.pos.y][x + figure.pos.x] = 2;
 			}
 		});
 	});
@@ -99,14 +100,50 @@ function rotate(figure) {
 
 }
 
+// This method does a lot of things (probably need to separate this method in a few but we'll leave that for a later commit)
+function checkRemovableLines(map) {
+	let lineNumber = 0;
+	let counter = 0;
+	let mapCopy = [];
+	// First we check each line in our map. If we find a '2' we increment a counter variable
+	map.forEach( (line) => {
+		
+		line.forEach( (block) => {
+			if ( block === 2 ) {
+				counter++;
+			}
+		});
+		// Second we check if our counter is 12 (the length of our map)
+		if ( counter === 12 ) {
+			let tempMap = map;
+			// Third we remove all the blocks from that line by making them '0'
+			for ( let i = 0; i < map[lineNumber].length; i++ ) {
+				map[lineNumber][i] = 0;
+			}
+			// Fourth we make a copy of the map
+			for ( let i = 0; i < map.length; i++ ) {
+				mapCopy[i] = map[i];
+			}
+			// Fifth we move all lines above the one that we just removed one line down
+			for ( let i = 0; i < lineNumber; i ++ ) {
+				map[i + 1] = mapCopy[i];
+			}
+		}
+		lineNumber++;
+		counter = 0;
+	});
+}
+
 function update() {
 	if ( collide(map, figure, 0, 1) ) {
 		merge(map, figure);
 		figure.matrix = figures[chooseFigure()];
+		figure.pos.x = 4;
 		figure.pos.y = 0;
 	} else {
 		figureDrop();
 	}
+	checkRemovableLines(map);
 }
 
 // The most similar way to do a 'System.currentTimeMillis()' 

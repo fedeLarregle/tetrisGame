@@ -13,6 +13,7 @@ document.addEventListener('keydown', event => {
 		if ( collide(map, figure, 0, 1) ) {
 			merge(map, figure);
 			figure.matrix = figures[chooseFigure()];
+			figure.pos.x = 4;
 			figure.pos.y = 0;
 		} else {
 			figureDrop();

@@ -2,7 +2,7 @@ const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const MAP_WIDTH = 12;
 const MAP_HEIGHT = 20;
-
+let pointsCounter = 0;
 context.scale(20, 20);
 
 function createMap(width, height) {
@@ -29,30 +29,36 @@ function draw() {
 function drawMatrix(matrix, offSet) {
 	matrix.forEach( (row, y) => {
 		row.forEach( (value, x) => {
-			if( value !== 0 ) {
-				context.fillStyle = 'red';
+			if( value === 2 ) {
+				context.fillStyle = 'rgba(204,54,60,0.8)';
 				context.fillRect(x + offSet.x, y + offSet.y, 1, 1);
-
-//				context.strokeStyle = 'rgb(255, 255, 255)';
-//				context.rect(x + offSet.x, y + offSet.y, 20, 20);
-//				context.stroke();
+			}
+			if ( value === 3 ) {
+				context.fillStyle = 'rgba(123,112,204,0.8)';
+				context.fillRect(x + offSet.x, y + offSet.y, 1, 1);
+			}
+			if ( value === 4 ) {
+				context.fillStyle = 'rgba(97,204,94,0.8)';
+				context.fillRect(x + offSet.x, y + offSet.y, 1, 1);
+			}
+			if ( value === 5 ) {
+				context.fillStyle = 'rgba(204,193,70,0.8)';
+				context.fillRect(x + offSet.x, y + offSet.y, 1, 1);
+			}
+			if ( value === 6 ) {
+				context.fillStyle = 'rgba(66,204,55,0.8)';
+				context.fillRect(x + offSet.x, y + offSet.y, 1, 1);
+			}
+			if ( value === 7 ) {
+				context.fillStyle = 'rgba(140,79,204,0.8)';
+				context.fillRect(x + offSet.x, y + offSet.y, 1, 1);
+			}
+			if ( value === 8 ) {
+				context.fillStyle = 'rgba(34,34,204,0.8)';
+				context.fillRect(x + offSet.x, y + offSet.y, 1, 1);
 			}
 		});
 	});
-}
-
-function wallCollide(map, figure, x, y) {
-	const toX = figure.pos.x + x;
-	const toY = figure.pos.y + y;
-	const m = figure.matrix;
-	const o = figure.pos;
-	let colliding = false;
-	if ( (toX + m[0].length) > MAP_WIDTH ) {
-		colliding = true;
-	} else if ( toX < 0 ) {
-		colliding = true;
-	}
-	return colliding;
 }
 
 // Checks if we collide with a '1' in our map 'matrix'
@@ -77,7 +83,7 @@ function merge(map, figure) {
 	figure.matrix.forEach( (row, y) => {
 		row.forEach((value, x) => {
 			if ( value !== 0 ) {
-				map[y + figure.pos.y][x + figure.pos.x] = 2;
+				map[y + figure.pos.y][x + figure.pos.x] = value;
 			}
 		});
 	});
@@ -109,7 +115,7 @@ function checkRemovableLines(map) {
 	map.forEach( (line) => {
 		
 		line.forEach( (block) => {
-			if ( block === 2 ) {
+			if ( block > 1 ) {
 				counter++;
 			}
 		});
@@ -128,6 +134,7 @@ function checkRemovableLines(map) {
 			for ( let i = 0; i < lineNumber; i ++ ) {
 				map[i + 1] = mapCopy[i];
 			}
+			pointsCounter += 100;
 		}
 		lineNumber++;
 		counter = 0;
